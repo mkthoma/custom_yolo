@@ -8,7 +8,9 @@ import torch
 
 from collections import Counter
 from torch.utils.data import DataLoader
-from tqdm import tqdm
+# from tqdm import tqdm
+from tqdm.notebook import tqdm
+
 
 
 def iou_width_height(boxes1, boxes2):
@@ -374,7 +376,7 @@ def cells_to_bboxes(predictions, anchors, S, is_preds=True):
     return converted_bboxes.tolist()
 
 def check_class_accuracy(model, loader, threshold):
-    model.eval()
+    # model.eval()
     tot_class_preds, correct_class = 0, 0
     tot_noobj, correct_noobj = 0, 0
     tot_obj, correct_obj = 0, 0
@@ -400,11 +402,14 @@ def check_class_accuracy(model, loader, threshold):
             correct_noobj += torch.sum(obj_preds[noobj] == y[i][..., 0][noobj])
             tot_noobj += torch.sum(noobj)
 
-    print(f"Class accuracy is: {(correct_class/(tot_class_preds+1e-16))*100:2f}%")
-    print(f"No obj accuracy is: {(correct_noobj/(tot_noobj+1e-16))*100:2f}%")
-    print(f"Obj accuracy is: {(correct_obj/(tot_obj+1e-16))*100:2f}%")
-    model.train()
-
+    # print(f"Class accuracy is: {(correct_class/(tot_class_preds+1e-16))*100:2f}%")
+    # print(f"No obj accuracy is: {(correct_noobj/(tot_noobj+1e-16))*100:2f}%")
+    # print(f"Obj accuracy is: {(correct_obj/(tot_obj+1e-16))*100:2f}%")
+    # model.train()
+    class_acc = (correct_class / (tot_class_preds + 1e-16)) * 100
+    no_obj_acc = (correct_noobj / (tot_noobj + 1e-16)) * 100
+    obj_acc = (correct_obj / (tot_obj + 1e-16)) * 100
+    return class_acc, no_obj_acc, obj_acc
 
 def get_mean_std(loader):
     # var[X] = E[X**2] - E[X]**2
@@ -443,10 +448,10 @@ def load_checkpoint(checkpoint_file, model, optimizer, lr):
 
 
 def get_loaders(train_csv_path, test_csv_path):
-    from dataset import YOLODataset
+    from dataset import YOLOTrainDataset, YOLOTestDataset
 
     IMAGE_SIZE = config.IMAGE_SIZE
-    train_dataset = YOLODataset(
+    train_dataset = YOLOTrainDataset(
         train_csv_path,
         transform=config.train_transforms,
         S=[IMAGE_SIZE // 32, IMAGE_SIZE // 16, IMAGE_SIZE // 8],
@@ -454,7 +459,7 @@ def get_loaders(train_csv_path, test_csv_path):
         label_dir=config.LABEL_DIR,
         anchors=config.ANCHORS,
     )
-    test_dataset = YOLODataset(
+    test_dataset = YOLOTestDataset(
         test_csv_path,
         transform=config.test_transforms,
         S=[IMAGE_SIZE // 32, IMAGE_SIZE // 16, IMAGE_SIZE // 8],
@@ -479,7 +484,7 @@ def get_loaders(train_csv_path, test_csv_path):
         drop_last=False,
     )
 
-    train_eval_dataset = YOLODataset(
+    train_eval_dataset = YOLOTestDataset(
         train_csv_path,
         transform=config.test_transforms,
         S=[IMAGE_SIZE // 32, IMAGE_SIZE // 16, IMAGE_SIZE // 8],

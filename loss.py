@@ -6,11 +6,11 @@ instead of BinaryCrossEntropy.
 import random
 import torch
 import torch.nn as nn
-
+import lightning.pytorch as pl
 from utils import intersection_over_union
 
 
-class YoloLoss(nn.Module):
+class YoloLoss(pl.LightningModule):
     def __init__(self):
         super().__init__()
         self.mse = nn.MSELoss()
