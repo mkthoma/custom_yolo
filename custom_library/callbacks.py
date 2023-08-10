@@ -29,9 +29,9 @@ class class_accuracy_callback(pl.Callback):
     def on_train_epoch_end(self, trainer: pl.Trainer, pl_module: pl.LightningModule) -> None:
         if (trainer.current_epoch + 1) % self.train_epoch_interval == 0:
             class_acc, no_obj_acc, obj_acc = check_class_accuracy(model=pl_module, loader=pl_module.train_dataloader(), threshold=config.CONF_THRESHOLD)
-            class_acc = round(class_acc,2)
-            no_obj_acc = round(no_obj_acc,2)
-            obj_acc = round(obj_acc,2)
+            class_acc = round(class_acc.item(),2)
+            no_obj_acc = round(no_obj_acc.item(),2)
+            obj_acc = round(obj_acc.item(),2)
 
             pl_module.log_dict(
                 {
@@ -50,9 +50,9 @@ class class_accuracy_callback(pl.Callback):
 
         if (trainer.current_epoch + 1) % self.test_epoch_interval == 0:
             class_acc, no_obj_acc, obj_acc = check_class_accuracy(model=pl_module, loader=pl_module.test_dataloader(), threshold=config.CONF_THRESHOLD)
-            class_acc = round(class_acc,2)
-            no_obj_acc = round(no_obj_acc,2)
-            obj_acc = round(obj_acc,2)
+            class_acc = round(class_acc.item(),2)
+            no_obj_acc = round(no_obj_acc.item(),2)
+            obj_acc = round(obj_acc.item(),2)
             
             pl_module.log_dict(
                 {
