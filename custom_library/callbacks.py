@@ -1,5 +1,5 @@
 import lightning.pytorch as pl
-import config
+from . import config
 from .utils import (check_class_accuracy,get_evaluation_bboxes,mean_average_precision,plot_couple_examples)
 from lightning.pytorch.callbacks import Callback
 

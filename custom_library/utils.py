@@ -1,4 +1,4 @@
-import config
+from . import config
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import numpy as np
@@ -447,7 +447,7 @@ def load_checkpoint(checkpoint_file, model, optimizer, lr):
 
 
 def get_loaders(train_csv_path, test_csv_path):
-    from dataset import YOLOTrainDataset, YOLOTestDataset
+    from .dataset import YOLOTrainDataset, YOLOTestDataset
 
     IMAGE_SIZE = config.IMAGE_SIZE
     train_dataset = YOLOTrainDataset(

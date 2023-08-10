@@ -5,7 +5,7 @@ from tqdm import tqdm
 from .model import YOLOv3
 from .loss import YoloLoss
 from .utils import get_loaders, load_checkpoint, check_class_accuracy, intersection_over_union
-import config
+from . import config
 from torch.optim.lr_scheduler import OneCycleLR
 
 
