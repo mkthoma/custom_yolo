@@ -1,10 +1,12 @@
 # Custom YOLOv3 on Pascal VOC 
-This repo contains code that was adapted from this [repo](https://github.com/aladdinpersson/Machine-Learning-Collection/tree/master/ML/Pytorch/object_detection/YOLOv3). A few changes are made with respect to the code:
+This repo contains code that was adapted from [another library](https://github.com/aladdinpersson/Machine-Learning-Collection/tree/master/ML/Pytorch/object_detection/YOLOv3). A few changes are made with respect to the code:
 1. The entire module is converted into PyTorch Lightning
 2. Best LR is found using the [Tuner](https://lightning.ai/docs/pytorch/stable/advanced/training_tricks.html#using-lightning-s-built-in-lr-finder) functionality. 
 3. One Cycle Policy is introduced as a scheduler.
 4. Since One Cycle Policy is used, the total number of epochs used is only 40% of the original.
 5. Mosaic transformation applied to 75% of train images
+
+The live application on HuggingFace Spaces can be found [here](https://huggingface.co/spaces/mkthoma/custom_yolo_v3).
 
 ## Dataset
 Pascal VOC (Visual Object Classes) is a collection of standardized image datasets for object class recognition. Initiated from 2005 to 2012, this dataset has become one of the most widely used benchmarks for evaluating the performance of different algorithms for object detection and image segmentation.
