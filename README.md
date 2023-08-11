@@ -154,6 +154,8 @@ Sample output:
 
 ![image](https://github.com/mkthoma/era_v1/assets/135134412/a3a472fe-ed5f-4afa-b91c-56e7bfdf16df)
 
+The model was run on a A100 Colab instance and took about 4 hours to run.
+
 ## Conclusion
 
 In our recent experiment, we employed YOLOv3, a state-of-the-art object detection model, to the renowned PASCAL VOC dataset using the PyTorch Lightning framework. PyTorch Lightning facilitated a cleaner and more maintainable codebase, allowing us to focus on the model's performance and optimizations rather than boilerplate training loops. Notably, the integration of mosaic transformations, a data augmentation technique designed to enhance the diversity of training samples by stitching four training images together, demonstrated a promising enhancement in the model's robustness.
